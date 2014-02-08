@@ -22,8 +22,7 @@ CalculateAnger()
 	total += survivorgrenades * 30;
 	total -= survivorincaps * 40;
 	total -= survivorlimping * 20;
-	
-	//total -= survivorbw * 30;
+
 	if (total >= 901 && total <= 1000) anger = 10;
 	else if (total >= 801 && total <= 900) anger = 9;
 	else if (total >= 701 && total <= 800) anger = 8;
@@ -66,7 +65,6 @@ GetSurvivorInfo()
 	survivorgrenades = 0;
 	survivorlimping = 0;
 	survivorincaps = 0;
-	survivorbw = 0;
 	for (new i=1; i<=MaxClients; i++) 
 	{ 
 		if (IsClientInGame(i)) 
@@ -93,7 +91,6 @@ GetSurvivorInfo()
 					ftemphealth = 0.0;
 				}
 				survivortemphealth += RoundToCeil(ftemphealth);
-				//survivorbw += GetEntProp(i, Prop_Data, "m_isGoingToDie");
 				
 				if (survivorhealth == 1)
 				{

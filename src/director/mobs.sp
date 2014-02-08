@@ -59,15 +59,6 @@ SendMobOfSize(size, bool:sound)
 	SetCommonLimit(oldcommonlimit);
 }
 
-EndlessHorde() //This function is not currently in use
-{
-	SetConVarInt(FindConVar("z_mega_mob_size"), 99999);
-	SpawnHorde();
-	SetConVarInt(FindConVar("z_mega_mob_size"), 99999);
-	DebugMessage("Endless Horde Started");
-	CreateTimer(9.0, ResetMegaMob);
-}
-
 public Action:ResetMegaMob(Handle:Timer)
 {
 	SetConVarInt(FindConVar("z_mega_mob_size"), 50);

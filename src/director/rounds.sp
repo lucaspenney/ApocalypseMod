@@ -13,7 +13,6 @@ public Action:Event_RoundStart(Handle:event, const String:name[], bool:dontBroad
 {
 	ResetDirector();
 	if (gamemode == 2) VersusRemoveItems();
-	roundstarted = true;
 	CreateTimer(2.0, StartRandomizing, _, TIMER_REPEAT);
 	DebugMessage("Event_RoundStart");
 } 
@@ -22,7 +21,6 @@ public Action:Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadca
 {
 	ResetDirector();
 	RemoveGuns();
-	roundstarted = false;
 	transition = false;
 	DebugMessage("Event_RoundEnd");
 }
@@ -30,7 +28,6 @@ public Action:Event_RoundEnd(Handle:event, const String:name[], bool:dontBroadca
 public Action:Event_MapTransition(Handle:event, const String:name[], bool:dontBroadcast)
 {
 	ResetDirector();
-	roundstarted = false;
 	transition = true;
 }
 
@@ -116,17 +113,15 @@ public ResetDirector()
 	finaleboss = false;
 	isfinale = false;
 	gunsrandomized = false;
-	roundstarted = false;
 	ingame = false;
 	lastmobtime = 0;
 	canpanic = true;
 	spawnedbosses = 0;
 	roundtime = 0;
-	SurvivalReset()
+	SurvivalReset();
 	//Re-Get gamemode and difficulty
-	GameMode = FindConVar("mp_gamemode");	
 	decl String:sGameMode[16];
-	GetConVarString(GameMode, sGameMode, sizeof(sGameMode));
+	GetConVarString(FindConVar("mp_gamemode"), sGameMode, sizeof(sGameMode));
 	GetCurrentMap(mapname, 128);
 	if (StrEqual(sGameMode, "coop", false))
 	{

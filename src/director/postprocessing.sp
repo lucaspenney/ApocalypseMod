@@ -32,7 +32,7 @@ public Action:PostProcessTimer(Handle:timer)
 	
 	//Fire it to the postprocess controller
 	new flags = GetCommandFlags("ent_fire");
-    SetCommandFlags("ent_fire", flags & ~FCVAR_CHEAT);
+	SetCommandFlags("ent_fire", flags & ~FCVAR_CHEAT);
 	new client = GetRandomSurvivor();
 	//Send new values
 	FakeClientCommand(client, "ent_fire postprocess_controller SetLocalContrastStrength %.2f", newlocalcontrast);

@@ -29,7 +29,7 @@ public Action:Event_PlayerHurt(Handle:event, const String:name[], bool:dontBroad
 	if (attacker <= 0) attacker = 1;
 	decl String:attackerclass[64];
 	if (attackerent != -1) GetEdictClassname(attackerent, attackerclass, sizeof(attackerclass));
-	if (IsClientInGame(client))
+	if (IsClientInGame(client) && IsClientInGame(attacker))
 	{
 		if (StrEqual(attackerclass, "infected", false))
 		{ //Attacker was an infected

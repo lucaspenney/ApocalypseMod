@@ -6,12 +6,6 @@
 new svRandSeed;
 new bool:svStarted;
 
-new svLastEventBosses;
-new svLastEventInfected;
-new svLastEventSpecials;
-
-new svZombieHealth = 50;
-new svZombieSpeed = 250;
 
 SurvivalReset()
 {

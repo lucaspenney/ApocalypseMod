@@ -18,6 +18,7 @@ public Plugin:myinfo =
 new String:mapname[40];
 
 new Handle:apoc_gore;
+new Handle:GameMode;
 
 public OnPluginStart() 
 { 
@@ -432,28 +433,18 @@ CvarChanges()
 	
 	if (StrEqual(sGameMode, "versus", false))
 	{
-		cvar = FindConVar("z_tank_health");
-		SetConVarInt(cvar, 2000);
-		cvar = FindConVar("versus_tank_chance");
-		SetConVarFloat(cvar, 1.0);
-		cvar = FindConVar("versus_tank_chance_intro");
-		SetConVarFloat(cvar, 0.0);  
-		cvar = FindConVar("versus_tank_chance_finale");
-		SetConVarFloat(cvar, 0.0);
+		SetConVarInt(z_tank_health, 2000);
+		SetConVarFloat(FindConVar("versus_tank_chance"), 1.0);
+		SetConVarFloat(FindConVar("versus_tank_chance_intro"), 0.0);
+		SetConVarFloat(FindConVar("versus_tank_chance_finale"), 0.0);
 		SetConVarFloat(FindConVar("versus_witch_chance_intro"), 1.0);
 		SetConVarFloat(FindConVar("versus_witch_chance_finale"), 1.0);
-		cvar = FindConVar("director_vs_convert_pills");
-		SetConVarFloat(cvar, 0.0);	
-		cvar = FindConVar("versus_tank_bonus_health");
-		SetConVarFloat(cvar, 1.0);			
-		cvar = FindConVar("z_frustration_lifetime");
-		SetConVarInt(cvar, 999);
-		cvar = FindConVar("z_ghost_speed");
-		SetConVarInt(cvar, 750);
-		cvar = FindConVar("vs_score_pp_health");
-		SetConVarFloat(cvar, 0.25);
-		cvar = FindConVar("vs_score_pp_healthbuffer");
-		SetConVarFloat(cvar, 0.1);
+		SetConVarFloat(FindConVar("director_vs_convert_pills"), 0.0);
+		SetConVarFloat(FindConVar("versus_tank_bonus_health"), 1.0);
+		SetConVarInt(FindConVar("z_frustration_lifetime"), 999);
+		SetConVarInt(FindConVar("z_ghost_speed"), 750);
+		SetConVarFloat(FindConVar("vs_score_pp_health"), 0.25);
+		SetConVarFloat(FindConVar("vs_score_pp_healthbuffer"), 0.1);
 		SetConVarInt(FindConVar("vs_max_team_switches"), 30);
 		SetConVarInt(FindConVar("vs_tank_damage"), 20);
 		SetConVarInt(FindConVar("z_ghost_delay_min"), 24);
@@ -491,8 +482,7 @@ CvarChanges()
 		SetConVarInt(FindConVar("holdout_special_spawn_interval_decay"), 1);
 		SetConVarInt(FindConVar("holdout_special_spawn_interval"), 20);
 		SetConVarInt(FindConVar("holdout_tank_double_spawn_delay"), 3);
-		cvar = FindConVar("director_no_specials");
-		SetConVarInt(cvar, 0);
+		SetConVarInt(director_no_specials, 0);
 		*/
 		//Dynamic Survival changes
 		SetConVarInt(FindConVar("holdout_max_boomers"), 0);
@@ -512,10 +502,8 @@ CvarChanges()
 		SetConVarInt(FindConVar("holdout_tank_double_spawn_delay"), 0);
 		SetConVarInt(FindConVar("holdout_horde_stage_interval"), 9999999);
 		SetConVarInt(FindConVar("holdout_horde_stage_interval_decay"), 0);
-		cvar = FindConVar("director_no_specials");
-		SetConVarInt(cvar, 1);
-		cvar = FindConVar("director_no_bosses");
-		SetConVarInt(cvar, 1);
+		SetConVarInt(director_no_specials, 0);
+		SetConVarInt(director_no_bosses, 1);
 	}
 	SetCommandFlags("weapon_reparse_server",GetCommandFlags("weapon_reparse_server")^FCVAR_CHEAT);
 	ServerCommand("weapon_reparse_server"); 
@@ -869,7 +857,7 @@ public Action:Event_GoreSystemHurt(Handle:event, const String:name[], bool:dontB
 		}
 	}
 }
-
+		//These values were discovered largely by experimentation and may not be 100% accurate. 
 		//Hitgroups
 		//1 = head
 		//2 = arms
@@ -891,7 +879,7 @@ public Action:Event_GoreSystemHurt(Handle:event, const String:name[], bool:dontB
 		// 13 = left arm 
 		// 14 = right arm + head
 		// 15 = all limbs except head
-		/// 16 = NO GIB OR FALL
+		// 16 = NO GIB OR FALL
 		// 17 = left arm
 		// 18 = right arm
 		// 19 = both arms
@@ -938,7 +926,7 @@ CreateBlood(Ent, String:ParticleName[], bool:headshot)
 		Angles[2] = GetRandomFloat(-15.0, 15.0);
 
 		//Origin:
-        GetEntPropVector(Ent, Prop_Send, "m_vecOrigin", Position);
+		GetEntPropVector(Ent, Prop_Send, "m_vecOrigin", Position);
 
 		//Lower:
 		Position[2] += GetRandomFloat(10.0, 30.0);
@@ -957,7 +945,7 @@ CreateBlood(Ent, String:ParticleName[], bool:headshot)
 		}
 
 		//Send:
-        TeleportEntity(Particle, Position, Angles, NULL_VECTOR);
+		TeleportEntity(Particle, Position, Angles, NULL_VECTOR);
 
 		//Target Name:
 		Format(tName, sizeof(tName), "Entity%d", Ent);

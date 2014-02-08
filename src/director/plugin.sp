@@ -5,7 +5,7 @@ public Plugin:myinfo =
 	name = "Dynamic Director",
 	author = "Luke",
 	description = "Apocalypse Mod's Dynamic Director",
-	version = "1.5",
+	version = "1.6",
 	url = "http://apocalypsemod.com/"
 }
 
@@ -33,7 +33,6 @@ new Handle:DirectorDebug;
 
 new difficulty; //1 easy, 2 normal, 3 advanced, 4 expert
 new gamemode; //1 coop, 2 versus, 3 survival
-new mutation; //0 none, 1 realism
 new bool:canpanic = true; //Panic events can only be called once every 90 seconds - this keeps track
 new String:mapname[128];
 
@@ -78,7 +77,6 @@ new survivorpills; //Total pills
 new survivorgrenades; //Total throwable items
 new survivorlimping; //Total amount of 1 health survivors
 new survivorincaps; //How many incapped survivors
-new survivorbw; //How many black and white survivors (deprecated)
 
 //Versus
 new bool:vs_billgiven;
@@ -89,7 +87,6 @@ new bool:vs_zoeygiven;
 new bool:gunsrandomized;
 new bool:transition;
 new bool:ingame;
-new bool:roundstarted;
 
 //Survival
 new svTime;

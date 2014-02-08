@@ -32,7 +32,8 @@ public Action:StartRandomizing(Handle:timer)
 	}
 	return Plugin_Continue;
 }
-
+/*
+Removed for now...
 RandomizeGuns()
 {
 	if (gamemode == 2 || gamemode == 3) return;
@@ -86,7 +87,7 @@ RandomizeGuns()
 	}
 	leftsafearea = false;
 }
-
+*/
 
 RemoveGuns()
 {

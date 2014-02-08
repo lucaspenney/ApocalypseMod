@@ -62,7 +62,9 @@ public Action:DeleteParticle(Handle:Timer, any:Particle)
 
 public Action:DeleteEntity(Handle:Timer, any:ent)
 {
-	AcceptEntityInput(ent, "kill");
+	if (IsValidEntity(ent)) {
+		AcceptEntityInput(ent, "kill");
+	}
 }
 
 
@@ -89,9 +91,6 @@ new bool:billdeploy;
 new bool:francisdeploy;
 new bool:louisdeploy;
 new bool:zoeydeploy;
-
-new clientitem[MAXPLAYERS+1] [2]; //Stores ent id's for the clients items, used for keeping track of them in game
-
 // Item ID List
 //
 //-1. Error
@@ -283,7 +282,6 @@ public Action:ForceMenu(client, args)
 	new item = GetClientItem(client);
 	new String:model[50];
 	GetClientModel(client, model, sizeof(model));
-	new chosen;
 	if (strcmp(model, "models/survivors/survivor_namvet.mdl", false) == 0)
 	{
 		if (billchosen)
@@ -411,27 +409,29 @@ public Action:DeployTimer(Handle:timer, any:client)
 
 public GiveClientItem(client, item)
 {
-	new String:model[50];
-	GetClientModel(client, model, sizeof(model));
-	if (strcmp(model, "models/survivors/survivor_namvet.mdl", false) == 0)
-	{
-		bill = item;
-		billchosen = true;
-	}
-	else if (strcmp(model, "models/survivors/survivor_biker.mdl", false) == 0)
-	{
-		francis = item;
-		francischosen = true;
-	}
-	else if (strcmp(model, "models/survivors/survivor_manager.mdl", false) == 0)
-	{
-		louis = item;
-		louischosen = true;
-	}
-	else if (strcmp(model, "models/survivors/survivor_teenangst.mdl", false) == 0)
-	{
-		zoey = item;
-		zoeychosen = true;
+	if (!IsClientInGame(client)){
+		new String:model[50];
+		GetClientModel(client, model, sizeof(model));
+		if (strcmp(model, "models/survivors/survivor_namvet.mdl", false) == 0)
+		{
+			bill = item;
+			billchosen = true;
+		}
+		else if (strcmp(model, "models/survivors/survivor_biker.mdl", false) == 0)
+		{
+			francis = item;
+			francischosen = true;
+		}
+		else if (strcmp(model, "models/survivors/survivor_manager.mdl", false) == 0)
+		{
+			louis = item;
+			louischosen = true;
+		}
+		else if (strcmp(model, "models/survivors/survivor_teenangst.mdl", false) == 0)
+		{
+			zoey = item;
+			zoeychosen = true;
+		}
 	}
 }
 
@@ -573,7 +573,7 @@ public SpawnFlare(client, amount)
 	if(IsValidEdict(Particle))
 	{
 		//Send:
-        TeleportEntity(Particle, origin, NULL_VECTOR, NULL_VECTOR);
+		TeleportEntity(Particle, origin, NULL_VECTOR, NULL_VECTOR);
 		//Properties:
 		DispatchKeyValue(Particle, "targetname", "L4DParticle");
 		DispatchKeyValue(Particle, "effect_name", "flare_burning");

@@ -13,9 +13,6 @@
 	#include <sdktools>
 #endif
 
-new Handle:cvar; //Support for pre v0.1.0 changes, will be removed when out of Beta
-new Handle:GameMode; 
-
 //Dynamic Director Natives (deprecated as of 0.1.0)
 native DD_GetIntensity();
 native DD_AddIntensity(amount);
@@ -88,6 +85,7 @@ stock GetRandomClient()
 			return client;
 		}
 	}
+	return 0;
 }
 //Gets random client on the survivor team
 stock GetRandomSurvivor() 
@@ -102,6 +100,7 @@ stock GetRandomSurvivor()
 			return client;
 		}
 	}
+	return 0;
 }
 //Gets a random client on the infected team
 stock GetRandomInfected() 
@@ -119,6 +118,7 @@ stock GetRandomInfected()
 			}
 		}
 	}
+	return 0;
 }
 
 stock IsClientSurvivor(client)
